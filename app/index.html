@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" ng-app="flickrViewApp">
+<head>
+  <meta charset="utf-8">
+  <title>Flickr View</title>
+  <link href="css/normalize.css" rel="stylesheet" type="text/css"/>
+  <link href="css/style.less" rel="stylesheet/less" type="text/css"/>
+  <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.6.1/less.min.js"></script>
+  <script src="https://apis.google.com/js/plusone.js"></script> -->
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular/angular-sanitize.js"></script>
+  <script src="lib/directives/ng-infinite-scroll.js"></script>
+  <script src="js/controllers.js"></script>
+  
+  
+
+</head>
+<body ng-controller="FlickrViewController" ng-class="{detailMode: detailMode}">
+<div class='container'>
+
+  <form class="controls view" ng-submit="loadImages(true);">
+    Tags: <input ng-model="tags">
+    Images match:
+    <select ng-model="tagMode">
+      <option value="all">All tags</option>
+      <option value="any">Any tag</option>
+    </select>
+  </div>
+
+  <!-- Detail View -->
+  <div class="detailView view"
+      ng-style="{'background-image':'url(' + detailImage.media.m + ')'}">
+      <div class="info">
+      
+      <span class="back" ng-click="setDetailImage(null)">Back</span>
+
+      <h2>{{detailImage.custom.title}}</h2>
+      <a href="{{'http://www.flickr.com/people/' + detailImage.author_id}}" target="_blank">{{detailImage.custom.user}}</a> |
+      <span class="date">Published: {{detailImage.published | date: dateFormat}}</span>
+
+      <div ng-bind-html="detailImage.description" ng-hide="!detailImage.description" class="description"></div>
+
+      <span class="tags" ng-hide="!detailImage.custom.tags.length">
+        Tags: <a ng-repeat="tag in detailImage.custom.tags" 
+                 ng-click="setTags(tag)"
+                 href="#">{{tag}}</a>
+      </span>
+      
+    </div>
+    <img ng-src="{{detailImage.custom.largeUrl}}" display-full-size-image />
+  </div>
+
+  <!-- list view -->
+  <div class="listView view">
+    <ul class="images" infinite-scroll="loadImages()" infinite-scroll-distance="3" infinite-scroll-disabled='loading'>
+      <li ng-repeat="image in images" class="listItem">    
+        <span class="thumb"
+              ng-style="{'background-image':'url(' + image.media.m + ')'}"
+              ng-click="setDetailImage(image)"></span>
+        <h2>{{image.custom.title}}</h2>
+        <span class="date">Published: {{image.published | date: dateFormat}}</span>
+        <a href="{{'http://www.flickr.com/people/' + image.author_id}}" class="author" target="_blank">{{image.custom.user}}</a> 
+        <a href="{{image.link}}" target="_blank">View on Flickr</a>
+      </li>    
+    </ul>
+  </div>
+  
+</div>
+</body>
+</html>

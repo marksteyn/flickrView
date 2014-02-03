@@ -1,0 +1,222 @@
+/* Less variables */
+
+@spacing: 10px;
+@circleDiameter: 100px;
+@borderRadius: @circleDiameter / 2;
+@largeBorderRadiums: @borderRadius + @spacing;
+@backgroundColor: #135996;
+@listBackground: #88c8ff;
+
+.translateX(@x) {
+  -webkit-transform: translateX(@x);          
+  transform: translateX(@x);   
+  color:  #88c8ff   
+}
+
+/* --- Tags --- */
+
+html, body {
+ padding:0;
+ margin:0;
+}
+
+body {
+ font-family: Open Sans, Helvetica, Arial, sans-serif;
+ color:@backgroundColor;
+ font-weight: 300;
+}
+
+ul {
+ margin: 0;
+ padding: @spacing 0;
+ list-style-type: none;
+}
+
+h2 {
+ font-size: 1.5rem;
+ margin:0 0 @spacing 0;
+}
+
+a:link {
+ color:#c00;
+ text-decoration: none;
+}
+
+a:visited {
+ color:#a00;
+}
+
+a:hover {
+ color: #e00;
+}
+
+a:active {
+ text-decoration: underline;
+}
+
+/* --- Classes --- */
+
+.view {
+ -webkit-transition: -webkit-transform 0.5s ease;
+ transition: transform 0.5s ease;
+ -webkit-backface-visibility: hidden;
+ width:100%;
+ position:fixed;
+}
+
+
+/* Controls */
+
+.controls {
+  box-sizing: border-box;
+  background: #888;
+  color: #fff;
+  z-index:100;
+  padding:@spacing;
+  text-align: right;
+}
+
+
+/* List view */
+
+.listView {
+ height:100%;
+ overflow:auto;
+ background-color: @backgroundColor;
+ z-index: 95;
+}
+
+.listView h2 {
+ white-space:nowrap; 
+ overflow:hidden;
+ text-overflow:ellipsis;
+}
+
+.listItem {
+ overflow:scroll;
+ margin: 0 @spacing @spacing @spacing;
+ background-color: @listBackground;
+ border-top-left-radius: @largeBorderRadiums;
+ border-bottom-left-radius: @largeBorderRadiums;
+ padding:@spacing;
+ margin-bottom:@spacing;
+}  
+
+.thumb {
+ box-sizing: border-box;
+ height:@circleDiameter;
+ width:@circleDiameter;
+ background-size:cover;
+ background-position: center center;
+ border-radius:@borderRadius;
+ float:left;
+ margin-right:@spacing;
+ border: 1px solid rgba(0,0,0, 0.1);
+ cursor:pointer;
+
+}
+
+.listView img {
+ display:none;
+}
+
+.listView .author {
+  float:left;
+  margin-right: 1em;
+}
+
+.listView .author,
+.listView .date {
+  margin-right:1em;
+}
+
+
+
+.images {
+  padding-top:50px;
+  
+}
+/* Detail view */ 
+
+.detailView {
+ top:0;
+ left:50%;
+ height:100%;
+ background-size:cover;
+ background-position: center center;
+ color:#333;
+ z-index:90;
+}
+
+.detailMode .listView,
+.detailMode .controls {
+ .translateX(-100%);          
+}
+
+.detailMode .detailView {
+ .translateX(-50%);
+}
+
+
+.info {
+ box-sizing: border-box;
+ position:absolute;
+ right:0;
+ top:0;
+ width:25%;
+ height:100%;
+ background-color: rgba(255,255,255, 0.6);
+ overflow:scroll;
+ padding:@spacing;
+ word-wrap: break-word;
+}
+
+.info p:first-of-type {
+ display:none;
+}
+.info p:nth-of-type(2) {
+ display:none;
+}
+
+
+.info .tags a {
+  margin-right: @spacing;
+  display:inline-block;
+}
+
+
+.detailView img {
+ width:1px;
+ height:1px;
+ visibility: hidden;
+}
+
+.back {
+  cursor:pointer;
+}
+
+
+/* Less than 800px */
+
+@media all and (max-width: 800px) {
+  .listView .author {
+    float:none;
+  }
+
+  .listView .date {
+    display: block;
+    margin-bottom: @spacing;
+  }
+
+}
+
+
+/* Less than 800px */
+
+@media all and (min-width: 1280px) {
+  .listItem {
+    width: 46%;
+    float:left;
+  }
+}
+
