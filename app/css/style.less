@@ -3,37 +3,44 @@
 @spacing: 10px;
 @circleDiameter: 100px;
 @borderRadius: @circleDiameter / 2;
-@largeBorderRadiums: @borderRadius + @spacing;
-@backgroundColor: #135996;
-@listBackground: #88c8ff;
+@largeBorderRadius: @borderRadius + @spacing;
+@backgroundColor: #fff;
+@listBackground: #fff;
+@listHoverBackground: #d8d8d8;
+@listHoverBorder: #c00;
+@fontColor: #333;
+
 
 .translateX(@x) {
   -webkit-transform: translateX(@x);          
   transform: translateX(@x);   
-  color:  #88c8ff   
 }
 
 /* --- Tags --- */
 
+
 html, body {
  padding:0;
  margin:0;
+ outline:0;
 }
 
 body {
  font-family: Open Sans, Helvetica, Arial, sans-serif;
- color:@backgroundColor;
- font-weight: 300;
+ background-color:@backgroundColor;
+ color:@fontColor;
 }
 
 ul {
  margin: 0;
  padding: @spacing 0;
  list-style-type: none;
+ overflow:auto;
 }
 
 h2 {
  font-size: 1.5rem;
+ line-height:1.9rem;
  margin:0 0 @spacing 0;
 }
 
@@ -48,6 +55,7 @@ a:visited {
 
 a:hover {
  color: #e00;
+ text-decoration: underline;
 }
 
 a:active {
@@ -74,33 +82,47 @@ a:active {
   z-index:100;
   padding:@spacing;
   text-align: right;
+  box-shadow: 3px 3px 3px rgba(0,0,0, 0.15);;
 }
 
 
 /* List view */
 
 .listView {
- height:100%;
- overflow:auto;
  background-color: @backgroundColor;
  z-index: 95;
+ padding:@spacing;
+ box-sizing:border-box;
+ position:relative;
 }
 
 .listView h2 {
  white-space:nowrap; 
  overflow:hidden;
  text-overflow:ellipsis;
+ font-weight:300;
+}
+
+.listView a {
+  white-space: nowrap;
 }
 
 .listItem {
+ box-sizing: border-box;
  overflow:scroll;
- margin: 0 @spacing @spacing @spacing;
  background-color: @listBackground;
- border-top-left-radius: @largeBorderRadiums;
- border-bottom-left-radius: @largeBorderRadiums;
+ border-radius: @largeBorderRadius;
  padding:@spacing;
  margin-bottom:@spacing;
+ border:1px solid #fff;
+ cursor:pointer;
+
 }  
+
+.listItem:hover {
+  xbackground-color: @listHoverBackground;
+  border-color: @listHoverBorder;
+}
 
 .thumb {
  box-sizing: border-box;
@@ -112,8 +134,6 @@ a:active {
  float:left;
  margin-right:@spacing;
  border: 1px solid rgba(0,0,0, 0.1);
- cursor:pointer;
-
 }
 
 .listView img {
@@ -130,7 +150,9 @@ a:active {
   margin-right:1em;
 }
 
-
+.listView .text {
+  margin-left: @circleDiameter + @spacing;
+}
 
 .images {
   padding-top:50px;
@@ -167,8 +189,15 @@ a:active {
  height:100%;
  background-color: rgba(255,255,255, 0.6);
  overflow:scroll;
+ -webkit-overflow-scrolling:touch;
  padding:@spacing;
  word-wrap: break-word;
+ -webkit-transition: opacity 0.5s ease-out;
+ transition: opacity 0.5s ease-out;
+}
+
+.info.hide {
+  opacity: 0;
 }
 
 .info p:first-of-type {
@@ -191,14 +220,20 @@ a:active {
  visibility: hidden;
 }
 
+.detailView .date {
+  white-space: nowrap;
+}
+
 .back {
   cursor:pointer;
 }
 
 
-/* Less than 800px */
+/* Narrow columns */
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 800px), 
+       all and (min-width: 1024px) and (max-width: 1280px),
+       all and (min-width: 1600px) and (max-width: 2100px) {
   .listView .author {
     float:none;
   }
@@ -211,12 +246,19 @@ a:active {
 }
 
 
-/* Less than 800px */
+/* Over 1280px 2 columns */
 
-@media all and (min-width: 1280px) {
+@media all and (min-width: 1024px) {
   .listItem {
-    width: 46%;
+    width: 50%;
     float:left;
   }
 }
 
+/* Over 1600px 3 columns*/
+
+@media all and (min-width: 1600px) {
+  .listItem {
+    width: 33%;
+  }
+}

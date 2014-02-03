@@ -20,6 +20,7 @@
     $scope.tags = '';
     $scope.tagMode = 'all';
     $scope.dateFormat = "d MMM yyyy 'at' HH:mm";
+    $scope.showDetailInfo = true;
     
     //
     //
@@ -69,9 +70,11 @@
     //
     $scope.setTags = function(str) {
       $scope.tags = str;
+      $scope.images = [];
+      $scope.detailMode = false;
       $scope.loadImages(true);
     }
-  
+    
   }]);
   
   global.flickrViewApp = flickrViewApp;
@@ -87,6 +90,24 @@
       }
     }
   });
+  
+// http://stackoverflow.com/questions/10931315/how-to-preventdefault-on-anchor-tags-in-angularjs  
+// Modified to stop propagation instead of preventing default
+  flickrViewApp.directive('a', function() {
+    return {
+      restrict: 'E',
+      link: function(scope, elem, attrs) {
+        if (attrs.ngClick || attrs.href !== '' || attrs.href !== '#'){
+          elem.on('click', function(e){
+            e.stopPropagation();
+            if (attrs.ngClick){
+              scope.$eval(attrs.ngClick);
+            }
+          });
+        }
+      }
+    };
+  });  
   
 
 
