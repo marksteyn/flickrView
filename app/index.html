@@ -11,22 +11,24 @@
   <script src="lib/angular/angular.js"></script>
   <script src="lib/angular/angular-sanitize.js"></script>
   <script src="lib/directives/ng-infinite-scroll.js"></script>
-  <script src="js/controllers.js"></script>
-  
-  
-
+  <script src="js/flickrViewApp.js"></script>
 </head>
+
 <body ng-controller="FlickrViewController" ng-class="{detailMode: detailMode}">
 
   <!-- Controls -->
-  <form class="controls view" ng-submit="loadImages(true);">
-    Tags: <input ng-model="tags">
-    Images match:
-    <select ng-model="tagMode">
-      <option value="all">All tags</option>
-      <option value="any">Any tag</option>
-    </select>
-  </form>
+  <header class="view" ng-submit="loadImages(true);">
+    <h1>Flickr Viewer</h1>
+    
+    <form class="controls">
+      <input ng-model="tags" type="text" placeholder="Tag search">
+      match
+      <select ng-model="tagMode">
+        <option value="all">All tags</option>
+        <option value="any">Any tag</option>
+      </select>
+    </form>
+  </header>
 
 
   <!-- List view -->
@@ -37,8 +39,10 @@
         <div class="text">
           <h2>{{image.custom.title}}</h2>
           <span class="date">Published: {{image.published | date: dateFormat}}</span>
-          <a href="{{'http://www.flickr.com/people/' + image.author_id}}" class="author" target="_blank">{{image.custom.user}}</a> 
-          <a href="{{image.link}}" target="_blank">View on Flickr</a>
+          <a href="{{'http://www.flickr.com/people/' + image.author_id}}" 
+             class="author" 
+             target="_blank" stop-propagation>{{image.custom.user}}</a> 
+          <a href="{{image.link}}" target="_blank" stop-propagation>View on Flickr</a>
         </div>
       </li>    
     </ul>
@@ -51,18 +55,23 @@
        ng-style="{'background-image':'url(' + detailImage.media.m + ')'}">
     <div class="info" ng-class="{hide: !showDetailInfo}">
       
-      <span class="back" ng-click="setDetailImage(null)">Back</span>
+      <div class="detailViewControls">
+        <span class="back" ng-click="setDetailImage(null)" stop-propagation>Back</span>
+      </div>
 
       <h2>{{detailImage.custom.title}}</h2>
       
-      <a href="{{'http://www.flickr.com/people/' + detailImage.author_id}}" target="_blank">{{detailImage.custom.user}}</a> |
+      <a href="{{'http://www.flickr.com/people/' + detailImage.author_id}}" 
+         target="_blank" 
+         class="author" stop-propagation>{{detailImage.custom.user}}</a>
       <span class="date">Published: {{detailImage.published | date: dateFormat}}</span>
       <div ng-bind-html="detailImage.description" ng-hide="!detailImage.description" class="description"></div>
 
       <span class="tags" ng-hide="!detailImage.custom.tags.length">
         Tags: <a ng-repeat="tag in detailImage.custom.tags" 
                  ng-click="setTags(tag)"
-                 href="#">{{tag}}</a>
+                 href="#"
+                 stop-propagation>{{tag}}</a>
       </span>
       
     </div>

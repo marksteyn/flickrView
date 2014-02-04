@@ -1,143 +1,175 @@
-/* Less variables */
+/* ------------- Less variables ------------- */
 
-@spacing: 10px;
-@circleDiameter: 100px;
+@spacing: 1rem;
+@circleDiameter: 10rem;
 @borderRadius: @circleDiameter / 2;
 @largeBorderRadius: @borderRadius + @spacing;
 @backgroundColor: #fff;
 @listBackground: #fff;
 @listHoverBackground: #d8d8d8;
-@listHoverBorder: #c00;
+@highlightColor: #c00;
 @fontColor: #333;
-
+@headerBackground: #fff;
 
 .translateX(@x) {
   -webkit-transform: translateX(@x);          
   transform: translateX(@x);   
+  -webkit-backface-visibility: hidden;
 }
 
-/* --- Tags --- */
 
+/* ------------- Tags ------------- */
+
+div, header, ul, li {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
 
 html, body {
- padding:0;
- margin:0;
- outline:0;
+  padding:0;
+  margin:0;
+  outline:0;
+  height: 100%;
+}
+
+html {
+  font-size:62.5%;
 }
 
 body {
- font-family: Open Sans, Helvetica, Arial, sans-serif;
- background-color:@backgroundColor;
- color:@fontColor;
+  font-family: Open Sans, Helvetica, Arial, sans-serif;
+  background-color:@backgroundColor;
+  color:@fontColor;
+  font-size:1.5em;
 }
 
 ul {
- margin: 0;
- padding: @spacing 0;
- list-style-type: none;
- overflow:auto;
+  margin: 0;
+  padding: @spacing 0;
+  list-style-type: none;
+}
+
+header {
+  padding:@spacing;
+  background-color: @headerBackground;
+  box-shadow: 3px 3px 3px rgba(0,0,0, 0.15);
+  border-bottom:1px solid #888;
+  z-index:100;
+}
+
+h1 {
+  float: left;
+  margin:0;
+  margin-left:@spacing;  
+  padding:0;
+  font-size:2.5rem;
 }
 
 h2 {
- font-size: 1.5rem;
- line-height:1.9rem;
- margin:0 0 @spacing 0;
+  font-size: 2.2rem;
+  margin:0 0 @spacing 0;
 }
 
 a:link {
- color:#c00;
- text-decoration: none;
+  color:@highlightColor;
+  text-decoration: none;
 }
 
 a:visited {
- color:#a00;
+  color:#a00;
 }
 
 a:hover {
- color: #e00;
- text-decoration: underline;
+  color: #e00;
+  text-decoration: underline;
 }
 
 a:active {
- text-decoration: underline;
+  text-decoration: underline;
 }
 
-/* --- Classes --- */
+input[type=text] {
+  border: 1px solid #aaa;
+  border-radius: 1.25rem;
+  height: 2.5rem;
+  font-size:1.5rem;
+  line-height:1.5rem;
+  padding: 0 1rem;
+}
+
+input[type=text]:focus {
+  outline:none;
+  border-color:@highlightColor;
+}
+
+
+/* ------------- Classes ------------- */
 
 .view {
- -webkit-transition: -webkit-transform 0.5s ease;
- transition: transform 0.5s ease;
- -webkit-backface-visibility: hidden;
- width:100%;
- position:fixed;
+  -webkit-transition: -webkit-transform 0.5s ease;
+  transition: transform 0.5s ease;
+  width:100%;
+  position:fixed;
 }
 
 
 /* Controls */
 
 .controls {
-  box-sizing: border-box;
-  background: #888;
-  color: #fff;
-  z-index:100;
-  padding:@spacing;
-  text-align: right;
-  box-shadow: 3px 3px 3px rgba(0,0,0, 0.15);;
+  float:right;
+  padding-top:@spacing/2;
 }
 
 
 /* List view */
 
 .listView {
- background-color: @backgroundColor;
- z-index: 95;
- padding:@spacing;
- box-sizing:border-box;
- position:relative;
+  background-color: @backgroundColor;
+  z-index: 95;
+  padding:@spacing;
+  position:relative;
+  min-height: 100%;
 }
 
 .listView h2 {
- white-space:nowrap; 
- overflow:hidden;
- text-overflow:ellipsis;
- font-weight:300;
+  white-space:nowrap; 
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-weight:300;
 }
 
 .listView a {
-  white-space: nowrap;
+   white-space: nowrap;
 }
 
 .listItem {
- box-sizing: border-box;
- overflow:scroll;
- background-color: @listBackground;
- border-radius: @largeBorderRadius;
- padding:@spacing;
- margin-bottom:@spacing;
- border:1px solid #fff;
- cursor:pointer;
+  overflow:scroll;
+  background-color: @listBackground;
+  border-radius: @largeBorderRadius;
+  padding:@spacing;
+  margin-bottom:@spacing;
+  border:1px solid #fff;
+  cursor:pointer;
 
 }  
 
 .listItem:hover {
-  xbackground-color: @listHoverBackground;
-  border-color: @listHoverBorder;
+  border-color: @highlightColor;
 }
 
 .thumb {
- box-sizing: border-box;
- height:@circleDiameter;
- width:@circleDiameter;
- background-size:cover;
- background-position: center center;
- border-radius:@borderRadius;
- float:left;
- margin-right:@spacing;
- border: 1px solid rgba(0,0,0, 0.1);
+  float:left;
+  height:@circleDiameter;
+  width:@circleDiameter;
+  margin-right:@spacing;
+  background-size:cover;
+  background-position: center center;
+  border-radius:@borderRadius;
+  border: 1px solid rgba(0,0,0, 0.1);
 }
 
 .listView img {
- display:none;
+  display:none;
 }
 
 .listView .author {
@@ -155,56 +187,56 @@ a:active {
 }
 
 .images {
-  padding-top:50px;
-  
+  padding-top:@borderRadius + @spacing;
+  overflow:auto;
+  min-height: 100%;
 }
 /* Detail view */ 
 
 .detailView {
- top:0;
- left:50%;
- height:100%;
- background-size:cover;
- background-position: center center;
- color:#333;
- z-index:90;
+  top:0;
+  left:50%;
+  height:100%;
+  background-size:cover;
+  background-position: center center;
+  color:#333;
+  z-index:90;
 }
 
 .detailMode .listView,
-.detailMode .controls {
- .translateX(-100%);          
+.detailMode header {
+  .translateX(-100%);          
 }
 
 .detailMode .detailView {
- .translateX(-50%);
+  .translateX(-50%);
 }
 
 
 .info {
- box-sizing: border-box;
- position:absolute;
- right:0;
- top:0;
- width:25%;
- height:100%;
- background-color: rgba(255,255,255, 0.6);
- overflow:scroll;
- -webkit-overflow-scrolling:touch;
- padding:@spacing;
- word-wrap: break-word;
- -webkit-transition: opacity 0.5s ease-out;
- transition: opacity 0.5s ease-out;
+  position:absolute;
+  right:0;
+  top:0;
+  width:25%;
+  min-width:24rem;
+  height:100%;
+  overflow-y:scroll;
+  padding:@spacing;
+  background-color: rgba(255,255,255, 0.6);
+  word-wrap: break-word;
+  -webkit-transition: -webkit-transform 0.5s ease-out;
+  transition: transform 0.5s ease-out;
 }
 
 .info.hide {
-  opacity: 0;
+  .translateX(100%);
 }
 
 .info p:first-of-type {
- display:none;
+  display:none;
 }
 .info p:nth-of-type(2) {
- display:none;
+  display:none;
 }
 
 
@@ -213,21 +245,64 @@ a:active {
   display:inline-block;
 }
 
-
 .detailView img {
- width:1px;
- height:1px;
- visibility: hidden;
+  width:1px;
+  height:1px;
+  visibility: hidden;
 }
 
 .detailView .date {
   white-space: nowrap;
 }
 
-.back {
-  cursor:pointer;
+.detailViewControls,
+.info h2,
+.info .author,
+.info .date {
+  display:block;
+  margin:-@spacing 0 @spacing -@spacing;
+  padding:@spacing;
+  width:100%;
+  box-sizing: content-box;
+  border-bottom: 1px solid rgba(0,0,0, 0.05);
 }
 
+.detailViewControls  {
+  background-color: rgba(0,0,0, 0.20);  
+}
+
+.info h2 {
+  background-color: rgba(0,0,0, 0.15);    
+}
+
+.info .author {
+  background-color: rgba(0,0,0, 0.10);    
+}
+
+.info .date {
+  background-color: rgba(0,0,0, 0.05);    
+}
+
+.detailViewControls {
+  overflow: hidden;  
+  margin:-@spacing 0 @spacing -@spacing;
+  padding:@spacing;
+  width:100%;
+  box-sizing: content-box;
+}
+
+.back {
+  float:right;
+  cursor:pointer;
+  height:2.5rem;
+  line-height:2.5rem;
+  border-radius: 1.25rem;
+  padding:0 @spacing;
+  background-color:#fff;
+}
+
+
+/* ------------- Responsive layout ------------- */
 
 /* Narrow columns */
 
@@ -242,7 +317,6 @@ a:active {
     display: block;
     margin-bottom: @spacing;
   }
-
 }
 
 
