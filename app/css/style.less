@@ -17,12 +17,16 @@
   -webkit-backface-visibility: hidden;
 }
 
+.boxSizing(@value) {
+  box-sizing: @value;
+  -moz-box-sizing: @value;
+}
+
 
 /* ------------- Tags ------------- */
 
 div, header, ul, li {
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
+  .boxSizing(border-box);
 }
 
 html, body {
@@ -53,7 +57,7 @@ header {
   padding:@spacing;
   background-color: @headerBackground;
   box-shadow: 3px 3px 3px rgba(0,0,0, 0.15);
-  border-bottom:1px solid #888;
+  border-bottom:1px solid #aaa;
   z-index:100;
 }
 
@@ -263,7 +267,7 @@ input[type=text]:focus {
   margin:-@spacing 0 @spacing -@spacing;
   padding:@spacing;
   width:100%;
-  box-sizing: content-box;
+  .boxSizing(content-box);
   border-bottom: 1px solid rgba(0,0,0, 0.05);
 }
 

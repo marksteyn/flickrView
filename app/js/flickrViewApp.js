@@ -80,7 +80,11 @@
       // the request is in progress
       //
       $scope.loading = true;
-      
+
+      if (clearList) {
+        $scope.images.length = 0;
+      }
+    
       //
       // Append tag query parameters to url
       //
@@ -90,10 +94,6 @@
       }
             
       $http.jsonp(feedUrl).success(function(data) {
-
-        if (clearList) {
-          $scope.images.length = 0;
-        }
 
         //
         // Preprocess the response to make some additional fields available in the view
@@ -135,13 +135,13 @@
     
     
     /**
-        
+      Set the tag string and execute the search.
+      Clears the existing search results, and returns to list view
   
       @param string of space separated tags
     */
     $scope.setTags = function(str) {
       $scope.tags = str;
-      $scope.images = [];
       $scope.detailMode = false;
       $scope.loadImages(true);
     }
@@ -149,7 +149,11 @@
   }]);
   
 
-  
+  /**
+   The detail view opens with the thumbnail set to cover the screen to ensure
+   something is visible immediately.  This directive replaces it with the large
+   size image once it has loaded.
+  */
   flickrViewApp.directive('displayFullSizeImage', function () {     
     return {
       link: function(scope, el, attrs) {   
@@ -160,7 +164,11 @@
     }
   });
   
-
+  
+  /**
+   Attribute level directive used on a tags to prevent the click event
+   bubbling.
+  /*/
   flickrViewApp.directive('stopPropagation', function () {
     return {
       restrict: 'A',
