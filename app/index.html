@@ -59,7 +59,9 @@
         <span class="back" ng-click="setDetailImage(null)" stop-propagation>Back</span>
       </div>
 
-      <h2><a href="{{detailImage.link}}" target="_blank">{{detailImage.custom.title}}</a></h2>
+      <h2><a href="{{detailImage.link}}" 
+             stop-propagation
+             target="_blank">{{detailImage.custom.title}}</a></h2>
       
       <a href="{{'http://www.flickr.com/people/' + detailImage.author_id}}" 
          target="_blank" 
