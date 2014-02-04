@@ -23,7 +23,7 @@
     <form class="controls">
       <input ng-model="tags" type="text" placeholder="Tag search">
       match
-      <select ng-model="tagMode">
+      <select ng-model="tagMode" ng-change="tags && loadImages(true)">
         <option value="all">All tags</option>
         <option value="any">Any tag</option>
       </select>
